@@ -1,0 +1,22 @@
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "8085:80"
+    depends_on:
+      - backend
+
+  backend:
+    build: ./backend
+    environment:
+      MONGO_URL: mongodb://mongo:27017/fullstackdb
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:7
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
